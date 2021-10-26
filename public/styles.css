@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+:root {
+    --task-width: 25vw;
+    --font-size: 1rem;
+}
+
+body {
+    text-align: center;
+    height: 100vh;
+}
+
+.logo {
+  font-family: 'Roboto';
+  font-size: calc(var(--font-size) * 3);
+}
+
+.create-new {
+    margin: 5rem;
+}
+
+.create-form, .create-button {
+    font-size: calc(var(--font-size) * 1.5);
+    padding: 1rem;
+    border-radius: .25rem;
+}   
+
+.create-button {
+    background-color: white;
+    color: rgb(54, 139, 90);
+    border: 1px solid rgb(54, 139, 90);
+}
+
+.create-button:hover {
+    background-color: rgb(54, 139, 90);
+    color: white;  
+    transition: background-color 300ms ease-in-out;
+}
+
+.task {
+    margin: auto;
+    width: var(--task-width);
+    font-size: calc(var(--font-size) * 1.5);
+    padding: 1.2rem;
+    color:rgb(95, 95, 95);
+    border: .5px solid rgb(194, 194, 194);
+    border-radius: .25rem;
+    font-family: 'Roboto';
+    border-left: 5px solid rgb(51, 81, 180);
+    margin-bottom: .5rem;
+    position: relative;
+}
+
+.task:hover {
+    transform: scale(1.01);
+    transition-duration: 200ms;
+}
+
+.links {
+    margin-bottom: 2rem;
+}
+
+.links a {
+    font-family: 'Roboto';
+}
+
+.not-active-link:hover {
+    color: rgb(95, 95, 95);
+}
+
+.links > * + * {
+    margin-left: 1rem;
+}
+
+.not-active-link {
+    color: rgb(97, 97, 97);
+    text-decoration: none;
+    font-size: calc(var(--font-size) * 1.5);
+}
+
+.active-link {
+    text-decoration: underline;
+    text-decoration-color: rgb(112, 173, 19);
+    color: black;
+    font-size: calc(var(--font-size) * 1.5);
+}
+
+.done {
+    background-color:rgb(214, 235, 233);
+}
+
+.date {
+    font-size: calc(var(--font-size) * 0.9);
+    position: absolute;
+    left: 1rem;    
+}
+
+.delete-btn {
+    font-size: calc(var(--font-size) * 2);
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1400px) {
+    :root {
+      --task-width: 60vw;
+      --font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    --task-width: 80vw;
+    --font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+    :root {
+      --task-width: 80vw;
+      --font-size: 0.6rem;
+    }
+  }

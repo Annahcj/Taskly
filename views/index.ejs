@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Taskly</title>
+</head>
+
+<body>
+    <%- include('_header.ejs') %>
+        <% for (var task of locals.tasks) { %>
+            <div class="task <%= locals.active ? 'active' : 'done' %>" data-id="<%= task.id %>"
+                data-state="<%= locals.active ? 'active' : 'done' %>">
+                <%= task.task %> <span class="date">
+                        <%= task.createdAt.toLocaleDateString() %>
+                    </span>
+                    <span class="material-icons delete-btn">
+                        delete_outline
+                    </span>
+            </div>
+            <% } %>
+</body>
+<script>
+
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        task.addEventListener('click', (e) => {
+            let data = {
+                state: task.dataset.state
+            }
+            console.log(JSON.stringify(data))
+            let taskId = task.dataset.id;
+            const endpoint = `${taskId}`;
+            if (e.target.innerText === 'delete_outline') {
+                fetch(endpoint, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(data => window.location.href = data.redirect)
+                    .catch(err => console.log(err))
+            } else {
+                fetch(endpoint, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(data => window.location.href = data.redirect)
+                    .catch(err => console.log(err))
+            }
+        })
+    })
+    const searchBar = document.querySelector('.create-form');
+    searchBar.addEventListener('input', (e) => {
+        const input = searchBar.value.toLowerCase();
+        for (var task of tasks) {
+            let taskStr = task.innerText.toLowerCase();
+            if (kmp(taskStr, input) > -1) {
+                task.style.display = '';
+            } else {
+                task.style.display = 'none';
+            }
+        }
+    })
+    function kmp(str, subStr) {
+        let n = str.length, m = subStr.length;
+        if (m === 0) return 0;
+        let lps = computeLPS(subStr);
+        let i = 0, j = 0;
+        while (i < n) {
+            if (str[i] === subStr[j]) {
+                i++, j++;
+                if (j === m) return i - m;
+            } else {
+                if (j !== 0) j = lps[j - 1];
+                else i++;
+            }
+        }
+        return -1;
+    }
+    function computeLPS(str) {
+        let m = str.length;
+        let lps = Array(m).fill(0);
+        let pre = 0, suff = 1;
+        while (suff < m) {
+            if (str[pre] === str[suff]) {
+                pre++;
+                lps[suff] = pre;
+                suff++;
+            } else {
+                if (pre !== 0) pre = lps[pre - 1];
+                else suff++;
+            }
+        }
+        return lps;
+    }
+</script>
+
+</html>

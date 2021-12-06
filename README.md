@@ -1,3 +1,2 @@
-# Taskly
-# A simple to-do app
+# Taskly is a simple to-do app
 # Architecture: EJS - Express - MongoDB
